@@ -1,0 +1,44 @@
+# Unreal Engine assets are binary; never let Git treat them as text
+*.uasset binary
+*.umap binary
+*.uexp binary
+*.ubulk binary
+*.uptnl binary
+
+# Media / art source binaries
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tga binary
+*.bmp binary
+*.exr binary
+*.hdr binary
+*.psd binary
+*.dds binary
+*.ico binary
+*.webp binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.flac binary
+*.aac binary
+*.wem binary
+*.fbx binary
+*.abc binary
+*.ttf binary
+*.otf binary
+
+# Binaries shipped with plugins
+*.dll binary
+*.lib binary
+*.pdb binary
+*.exe binary
+*.dylib binary
+*.so binary
+*.a binary
+
+# Archives
+*.zip binary
+*.7z binary
+*.rar binary
+*.pak binary
