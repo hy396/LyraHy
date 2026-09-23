@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "rYgK+Nv2rRM=",
+  "success": true,
+  "projectFilePath": "D:\\ue_texiao\\LyraHy\\Plugins\\UnLua\\Source\\UnLuaDefaultParamCollectorUbtPlugin\\UnLuaDefaultParamCollectorUbtPlugin.ubtplugin.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\幻雨\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
