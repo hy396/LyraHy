@@ -295,27 +295,7 @@
 			"Enabled": true
 		},
 		{
-			"Name": "ShooterCore",
-			"Enabled": true
-		},
-		{
-			"Name": "ShooterMaps",
-			"Enabled": true
-		},
-		{
-			"Name": "TopDownArena",
-			"Enabled": true
-		},
-		{
 			"Name": "FunctionalTestingEditor",
-			"Enabled": true
-		},
-		{
-			"Name": "ShooterExplorer",
-			"Enabled": true
-		},
-		{
-			"Name": "ShooterTests",
 			"Enabled": true
 		},
 		{

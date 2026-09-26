@@ -3,6 +3,7 @@
 .Rider/
 .idea/
 .workbuddy-ai/
+.codebuddy/
 
 # Compiled Object files
 *.slo
@@ -277,6 +278,33 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+###########################################################
+#                  本项目自定义忽略项                      #
+###########################################################
+
+# WorkBuddy / CodeBuddy 本地会话数据
+.codebuddy/
+
+# RiderLink：IDE 集成插件，含机器相关的中间产物，不应入库
+Plugins/Developer/
+
+# 用户级 IDE 配置
+*.sln.DotSettings.user
+*.DotSettings.user
+
+# 引擎与插件的构建中间产物（再保险一层）
+Plugins/**/Binaries/*
+Plugins/**/Intermediate/*
+Plugins/**/Saved/*
+Plugins/**/DerivedDataCache/*
+
+# 临时脚本与日志
+Saved/Logs/
+Saved/TObjectPtrBackup*/
+
+# UnLua UBT 插件的构建产物
+Plugins/UnLua/Source/UnLuaDefaultParamCollectorUbtPlugin/obj/
 
 
 
