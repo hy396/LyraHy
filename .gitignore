@@ -55,16 +55,9 @@ SourceArt/**/*.tga
 Binaries/*
 Plugins/**/Binaries/*
 
-# Builds
-Build/*
-
-# Whitelist PakBlacklist-<BuildConfiguration>.txt files
-!Build/*/
-Build/*/**
-!Build/*/PakBlacklist*.txt
-
-# Don't ignore icon files in Build
-!Build/**/*.ico
+# Build 目录：保留构建配置与平台打包资源，仅排除编译中间产物
+Build/**/obj/
+Build/**/uatobj/
 
 # Built data for maps
 *_BuiltData.uasset
@@ -97,7 +90,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/  # 已禁用：Windows 下大小写不敏感，该规则会误伤 UE 项目的 Build 目录
 develop-eggs/
 dist/
 downloads/
