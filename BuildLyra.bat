@@ -15,7 +15,7 @@ rem    BuildLyra.bat fixlib     修复损坏/缺失的 .lib（推荐在 LNK1136 时用）
 rem    BuildLyra.bat clean      清空中间产物后全量重编译（很慢，慎用）
 rem
 rem  两个关键点：
-rem   1. -NoUBA 是必须的。UE 5.6 默认启用 UBA（Unreal Build Accelerator），
+rem   1. -NoUBA 是必须的。UE 5.8 默认启用 UBA（Unreal Build Accelerator），
 rem      在本机会大量报 "Access is denied" 和 "LNK1136 无效或损坏的文件"。
 rem   2. 不要只删 .lib 而不重建。实测 UBT 自己调用 link.exe 重建 .lib 会
 rem      失败（返回 1 且无任何输出），但手动调用 link.exe 是成功的。
@@ -23,14 +23,14 @@ rem      所以 fixlib 做的是「删除 + 立刻手工重建」的闭环，不会把工程卡死。
 rem ============================================================
 
 rem ================= 配置区（换机器时改这里）=================
-set "ENGINE=D:\UE_5.6"
-set "UPROJECT=D:\ue_texiao\LyraHy\LyraHy.uproject"
+set "ENGINE=D:\UE_5.8"
+set "UPROJECT=D:\Unreal Projects\LyraHy\LyraHy.uproject"
 set "PLATFORM=Win64"
 
 rem link.exe 路径。若升级 VS 后失效，去
 rem %LOCALAPPDATA%\UnrealBuildTool\Log.txt 里搜 "link.exe /LIB @"，
 rem 把找到的实际路径填到这里。
-set "LINKEXE=D:\cpp\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64\link.exe"
+set "LINKEXE=D:\cpp\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe"
 
 set "CONFIG=Development"
 set "TARGET=LyraEditor"
