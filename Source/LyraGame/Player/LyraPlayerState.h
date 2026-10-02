@@ -152,12 +152,16 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Lyra|PlayerState")
 	TObjectPtr<ULyraAbilitySystemComponent> AbilitySystemComponent;
 
-	// Health attribute set used by this actor.
 	UPROPERTY()
-	TObjectPtr<const class ULyraHealthSet> HealthSet;
-	// Combat attribute set used by this actor.
-	UPROPERTY()
-	TObjectPtr<const class ULyraCombatSet> CombatSet;
+	TObjectPtr<const class ULyraRPGStatSet> HealthSet;
+
+	// 当前RPG中移除了 HealthSet 和 CombatSet转而使用了自定义的属性
+	// // Health attribute set used by this actor.
+	// UPROPERTY()
+	// TObjectPtr<const class ULyraHealthSet> HealthSet;
+	// // Combat attribute set used by this actor.
+	// UPROPERTY()
+	// TObjectPtr<const class ULyraCombatSet> CombatSet;
 
 	UPROPERTY(Replicated)
 	ELyraPlayerConnectionType MyPlayerConnectionType;

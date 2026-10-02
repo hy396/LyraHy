@@ -3,7 +3,7 @@
 #pragma once
 
 #include "AttributeSet.h"
-
+#include "NativeGameplayTags.h"
 #include "LyraAttributeSet.generated.h"
 
 #define UE_API LYRAGAME_API
@@ -13,7 +13,15 @@ class ULyraAbilitySystemComponent;
 class UObject;
 class UWorld;
 struct FGameplayEffectSpec;
-
+// ---------------------------------------------------------------------------
+// 本属性集用到的 GameplayTag 声明（对应的定义在 .cpp 中）
+// 用于标记伤害的类型/来源，供 PostGameplayEffectExecute 判断处理逻辑
+// ---------------------------------------------------------------------------
+LYRAGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Gameplay_Damage);				// 普通伤害
+LYRAGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Gameplay_DamageImmunity);		// 伤害免疫
+LYRAGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Gameplay_DamageSelfDestruct);	// 自毁伤害（可无视无敌/无限血）
+LYRAGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Gameplay_FellOutOfWorld);		// 掉出世界造成的伤害
+LYRAGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Lyra_Damage_Message);			// 伤害消息广播使用的 Verb
 
 /**
  * This macro defines a set of helper functions for accessing and initializing attributes.

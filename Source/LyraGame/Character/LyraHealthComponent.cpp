@@ -10,7 +10,8 @@
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
-#include "AbilitySystem/Attributes/LyraHealthSet.h"
+// #include "AbilitySystem/Attributes/LyraHealthSet.h"
+#include "AbilitySystem/Attributes/LyraRPGStatSet.h"
 #include "Messages/LyraVerbMessage.h"
 #include "Messages/LyraVerbMessageHelpers.h"
 #include "GameFramework/GameplayMessageSubsystem.h"
@@ -39,6 +40,7 @@ void ULyraHealthComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	// TODO:不知道要不要注释掉好，唉纠结，先看看吧
 	DOREPLIFETIME(ULyraHealthComponent, DeathState);
 }
 
@@ -67,7 +69,7 @@ void ULyraHealthComponent::InitializeWithAbilitySystem(ULyraAbilitySystemCompone
 		return;
 	}
 
-	HealthSet = AbilitySystemComponent->GetSet<ULyraHealthSet>();
+	HealthSet = AbilitySystemComponent->GetSet<ULyraRPGStatSet>();
 	if (!HealthSet)
 	{
 		UE_LOG(LogLyra, Error, TEXT("LyraHealthComponent: Cannot initialize health component for owner [%s] with NULL health set on the ability system."), *GetNameSafe(Owner));
@@ -77,15 +79,22 @@ void ULyraHealthComponent::InitializeWithAbilitySystem(ULyraAbilitySystemCompone
 	// Register to listen for attribute changes.
 	HealthSet->OnHealthChanged.AddUObject(this, &ThisClass::HandleHealthChanged);
 	HealthSet->OnMaxHealthChanged.AddUObject(this, &ThisClass::HandleMaxHealthChanged);
-	HealthSet->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
+	HealthSet->OnStaminaChanged.AddUObject(this, &ThisClass::HandleStaminaChanged);
+	HealthSet->OnMaxStaminaChanged.AddUObject(this, &ThisClass::HandleMaxStaminaChanged);
 
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
-	AbilitySystemComponent->SetNumericAttributeBase(ULyraHealthSet::GetHealthAttribute(), HealthSet->GetMaxHealth());
+	AbilitySystemComponent->SetNumericAttributeBase(ULyraRPGStatSet::GetHealthAttribute(), HealthSet->GetMaxHealth());
+	AbilitySystemComponent->SetNumericAttributeBase(ULyraRPGStatSet::GetStaminaAttribute(), HealthSet->GetMaxStamina());
 
 	ClearGameplayTags();
 
 	OnHealthChanged.Broadcast(this, HealthSet->GetHealth(), HealthSet->GetHealth(), nullptr);
-	OnMaxHealthChanged.Broadcast(this, HealthSet->GetHealth(), HealthSet->GetHealth(), nullptr);
+	// 没看懂官方为啥这里放的不是Max值,看懂了这里是初始化，默认值就是Max值
+	// OnMaxHealthChanged.Broadcast(this, HealthSet->GetHealth(), HealthSet->GetHealth(), nullptr);
+	OnMaxHealthChanged.Broadcast(this, HealthSet->GetMaxHealth(), HealthSet->GetMaxHealth(), nullptr);
+	OnStaminaChanged.Broadcast(this, HealthSet->GetStamina(), HealthSet->GetStamina(), nullptr);
+	// OnMaxStaminaChanged.Broadcast(this, HealthSet->GetStamina(), HealthSet->GetStamina(), nullptr);
+	OnMaxStaminaChanged.Broadcast(this, HealthSet->GetMaxStamina(), HealthSet->GetMaxStamina(), nullptr);
 }
 
 void ULyraHealthComponent::UninitializeFromAbilitySystem()
@@ -96,6 +105,8 @@ void ULyraHealthComponent::UninitializeFromAbilitySystem()
 	{
 		HealthSet->OnHealthChanged.RemoveAll(this);
 		HealthSet->OnMaxHealthChanged.RemoveAll(this);
+		HealthSet->OnStaminaChanged.RemoveAll(this);
+		HealthSet->OnMaxStaminaChanged.RemoveAll(this);
 		HealthSet->OnOutOfHealth.RemoveAll(this);
 	}
 
@@ -135,6 +146,29 @@ float ULyraHealthComponent::GetHealthNormalized() const
 	return 0.0f;
 }
 
+float ULyraHealthComponent::GetStamina() const
+{
+	return (HealthSet ? HealthSet->GetStamina() : 0.0f);
+}
+
+float ULyraHealthComponent::GetMaxStamina() const
+{
+	return (HealthSet ? HealthSet->GetMaxStamina() : 0.0f);
+}
+
+float ULyraHealthComponent::GetStaminaNormalized() const
+{
+	if (HealthSet)
+	{
+		const float Stamina = HealthSet->GetStamina();
+		const float MaxStamina = HealthSet->GetMaxStamina();
+
+		return ((MaxStamina > 0.0f) ? (Stamina / MaxStamina) : 0.0f);
+	}
+
+	return 0.0f;
+}
+
 void ULyraHealthComponent::HandleHealthChanged(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec* DamageEffectSpec, float DamageMagnitude, float OldValue, float NewValue)
 {
 	OnHealthChanged.Broadcast(this, OldValue, NewValue, DamageInstigator);
@@ -143,6 +177,16 @@ void ULyraHealthComponent::HandleHealthChanged(AActor* DamageInstigator, AActor*
 void ULyraHealthComponent::HandleMaxHealthChanged(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec* DamageEffectSpec, float DamageMagnitude, float OldValue, float NewValue)
 {
 	OnMaxHealthChanged.Broadcast(this, OldValue, NewValue, DamageInstigator);
+}
+
+void ULyraHealthComponent::HandleStaminaChanged(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec* DamageEffectSpec, float DamageMagnitude, float OldValue, float NewValue)
+{
+	OnStaminaChanged.Broadcast(this, OldValue, NewValue, DamageInstigator);
+}
+
+void ULyraHealthComponent::HandleMaxStaminaChanged(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec* DamageEffectSpec, float DamageMagnitude, float OldValue, float NewValue)
+{
+	OnMaxStaminaChanged.Broadcast(this, OldValue, NewValue, DamageInstigator);
 }
 
 void ULyraHealthComponent::HandleOutOfHealth(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec* DamageEffectSpec, float DamageMagnitude, float OldValue, float NewValue)
