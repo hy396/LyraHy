@@ -365,6 +365,26 @@
 		{
 			"Name": "PlatformDLC",
 			"Enabled": true
+		},
+		{
+			"Name": "ModelContextProtocol",
+			"Enabled": true
+		},
+		{
+			"Name": "ShooterCore",
+			"Enabled": true
+		},
+		{
+			"Name": "ShooterExplorer",
+			"Enabled": true
+		},
+		{
+			"Name": "ShooterMaps",
+			"Enabled": true
+		},
+		{
+			"Name": "ShooterTests",
+			"Enabled": true
 		}
 	],
 	"EpicSampleNameHash": "451731683"
