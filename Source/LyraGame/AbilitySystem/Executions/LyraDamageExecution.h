@@ -11,7 +11,7 @@ class UObject;
 
 /**
  * ULyraDamageExecution
- *
+ *	TODO : 暂时用不了这个执行类
  *	Execution used by gameplay effects to apply damage to the health attributes.
  */
 UCLASS()

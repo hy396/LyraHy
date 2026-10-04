@@ -11,7 +11,7 @@ class UObject;
 
 /**
  * ULyraHealExecution
- *
+ *	TODO : 暂时用不了这个执行类
  *	Execution used by gameplay effects to apply healing to the health attributes.
  */
 UCLASS()

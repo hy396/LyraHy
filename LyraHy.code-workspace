@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{ "name": "游戏代码", "path": "Source" },
+		{ "name": "我的插件 RPGCore", "path": "Plugins/GameFeatures/RPGCore" },
+		{ "name": "Lua 脚本", "path": "Content/Script" },
+		{ "name": "日志", "path": "Saved/Logs" }
+	],
+	"settings": {
+		"files.exclude": {
+			"**/Binaries": true,
+			"**/Intermediate": true,
+			"**/DerivedDataCache": true
+		},
+		"search.exclude": {
+			"**/Binaries": true,
+			"**/Intermediate": true,
+			"**/DerivedDataCache": true,
+			"**/*.uasset": true,
+			"**/*.umap": true
+		},
+		"files.watcherExclude": {
+			"**/Binaries/**": true,
+			"**/Intermediate/**": true,
+			"**/DerivedDataCache/**": true,
+			"**/Content/**": true
+		},
+		"files.associations": {
+			"*.uproject": "jsonc",
+			"*.uplugin": "jsonc"
+		}
+	}
+}

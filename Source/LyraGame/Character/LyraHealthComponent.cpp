@@ -82,6 +82,8 @@ void ULyraHealthComponent::InitializeWithAbilitySystem(ULyraAbilitySystemCompone
 	HealthSet->OnStaminaChanged.AddUObject(this, &ThisClass::HandleStaminaChanged);
 	HealthSet->OnMaxStaminaChanged.AddUObject(this, &ThisClass::HandleMaxStaminaChanged);
 
+	HealthSet->OnOutOfHealth.AddUObject(this, &ThisClass::HandleOutOfHealth);
+
 	// TEMP: Reset attributes to default values.  Eventually this will be driven by a spread sheet.
 	AbilitySystemComponent->SetNumericAttributeBase(ULyraRPGStatSet::GetHealthAttribute(), HealthSet->GetMaxHealth());
 	AbilitySystemComponent->SetNumericAttributeBase(ULyraRPGStatSet::GetStaminaAttribute(), HealthSet->GetMaxStamina());
