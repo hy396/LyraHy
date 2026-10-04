@@ -64,9 +64,22 @@ const ULyraPawnData* ALyraGameMode::GetPawnDataForController(const AController* 
 	if (ExperienceComponent->IsExperienceLoaded())
 	{
 		const ULyraExperienceDefinition* Experience = ExperienceComponent->GetCurrentExperienceChecked();
-		if (Experience->DefaultPawnData != nullptr)
+		
+		if (InController->IsPlayerController() && Experience->DefaultPawnData != nullptr)
 		{
 			return Experience->DefaultPawnData;
+		}else if (const ALyraPlayerBotController* BotController = Cast<ALyraPlayerBotController>(InController))
+		{
+			if (const TObjectPtr<const ULyraPawnData>* Found = Experience->EnemyPawnClasses.Find(BotController->BotIdentifier))
+			{
+				if (*Found != nullptr) { return *Found; }
+			}
+
+			// const ULyraPawnData* LyraEnemyPawnData = Experience->EnemyPawnClasses[BotController->BotIdentifier];
+			// if (LyraEnemyPawnData != nullptr)
+			// {
+			// 	return LyraEnemyPawnData;
+			// }
 		}
 
 		// Experience is loaded and there's still no pawn data, fall back to the default for now

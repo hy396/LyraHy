@@ -42,6 +42,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Gameplay)
 	TObjectPtr<const ULyraPawnData> DefaultPawnData;
 
+	// 通过整数键值对来存储敌人的Pawn类，键为整数，值为ULyraPawnData的指针
+	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
+	TMap<int32, TObjectPtr<const ULyraPawnData>> EnemyPawnClasses;
+
 	// List of actions to perform as this experience is loaded/activated/deactivated/unloaded
 	UPROPERTY(EditDefaultsOnly, Instanced, Category="Actions")
 	TArray<TObjectPtr<UGameFeatureAction>> Actions;

@@ -44,6 +44,9 @@ public:
 
 	virtual void OnUnPossess() override;
 
+	// 用于标识敌人(区分不同类型的敌方 Bot)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = BotIdentifier)
+	int32 BotIdentifier;
 
 private:
 	UFUNCTION()
